@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import placeholder from './placeholder.jpg';
 import { connect } from 'react-redux';
-import fetchDogs from '../actions/dogActions';
-import { test } from '../actions/test.js'
+import { fetchDogs } from '../actions/dogActions';
 import Header from './Header'
 import { photoPickerButton } from '@aws-amplify/ui';
 
 function Pug(props) {
-  const [pug, setPug] = useState('')
 
   let handleSubmit = (e) => {
     e.preventDefault()

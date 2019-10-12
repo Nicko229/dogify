@@ -1,7 +1,6 @@
 import { FETCH_ALL_BREEDS, FETCH_PUGS } from './types';
 
-const fetchDogs = () => dispatch => {
-
+export let fetchDogs = () => dispatch => {
   console.log("Fetching")
   fetch(`https://dog.ceo/api/breed/pug/images/random`)
     .then(res => res.json())
@@ -10,7 +9,4 @@ const fetchDogs = () => dispatch => {
         type: FETCH_PUGS,
         payload: data.message
       }));
-}
-
-export default fetchDogs
-// TODO possibly need to find where data is on the object??
+} 
