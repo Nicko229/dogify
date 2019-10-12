@@ -1,7 +1,7 @@
 import React from 'react';
 import placeholder from './placeholder.jpg';
 import { connect } from 'react-redux';
-import { fetchDogs } from '../actions/dogActions';
+import { fetchPugs } from '../actions/dogActions';
 import Header from './Header'
 import { photoPickerButton } from '@aws-amplify/ui';
 
@@ -9,7 +9,7 @@ function Pug(props) {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    props.fetchDogs();
+    props.fetchPugs();
   }
 
   return (
@@ -31,4 +31,4 @@ const mapStateToProps = state => ({
   dogs: state.dogs.pugs
 });
 
-export default connect(mapStateToProps, { fetchDogs })(Pug)
+export default connect(mapStateToProps, { fetchPugs })(Pug)
