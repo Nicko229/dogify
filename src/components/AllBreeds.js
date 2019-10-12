@@ -9,10 +9,11 @@ export default function AllBreeds() {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    axios.get(`https://dog.ceo/api/breed/${breed}/images/random`)
-      .then(res => {
+    fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+      .then(res => res.json())
+      .then(data => {
 
-        setDog(res.data.message);
+        setDog(data.message);
       })
       .catch(error => {
         console.log(error)

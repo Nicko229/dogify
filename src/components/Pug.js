@@ -8,10 +8,10 @@ export default function Pug() {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    axios.get(`https://dog.ceo/api/breed/pug/images/random`)
-      .then(res => {
-
-        setPug(res.data.message);
+    fetch(`https://dog.ceo/api/breed/pug/images/random`)
+      .then(res => res.json())
+      .then(data => {
+        setPug(data.message);
       })
       .catch(error => {
         console.log(error)
