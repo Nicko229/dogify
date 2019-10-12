@@ -1,10 +1,21 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 // import FormErrors from "../FormErrors";
 // import Validate from "../utility/FormValidation";
 import { InputGroup, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
 import { Auth } from "aws-amplify";
 
-function Register() {
+function Register(props) {
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+    errors: {
+      cognito: null,
+      blankfield: false,
+      passwordmatch: false
+    }
+  })
   // state = {
   //   username: "",
   //   email: "",
@@ -18,7 +29,7 @@ function Register() {
   // }
 
   let clearErrorState = () => {
-    this.setState({
+    setState({
       errors: {
         cognito: null,
         blankfield: false,
@@ -40,7 +51,7 @@ function Register() {
     // }
 
     // AWS Cognito integration here
-    const { username, email, password } = this.state
+    const { username, email, password } = state
     try {
       const signUpResponse = await Auth.signUp({
         username,
@@ -50,21 +61,21 @@ function Register() {
         }
       });
       console.log(signUpResponse);
-      this.props.history.push('/welcome');
+      props.history.push('/welcome');
     } catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.setState({
+      state({
         errors: {
           ...this.state.errors,
-          cognito: error
+          cognito: err
         }
       })
     }
   };
 
   let onInputChange = event => {
-    this.setState({
+    setState({
       [event.target.id]: event.target.value
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
@@ -77,14 +88,17 @@ function Register() {
         <h1>Register</h1>
         {/* <FormErrors formerrors={this.state.errors} /> */}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit()}>
           <div className="field">
             <p className="control">
               <InputGroup className="mb-3">
                 <FormControl
                   placeholder="Enter Username"
                   aria-label="EnterUsername"
-                  aria-describedby="basic-addon1"
+                  aria-describedby="userNameHelp"
+                  id="username"
+                  value={state.username}
+                  onChange={onInputChange}
                 />
               </InputGroup>
               {/* <input
@@ -104,7 +118,10 @@ function Register() {
                 <FormControl
                   placeholder="Enter Email"
                   aria-label="EnterEmail"
-                  aria-describedby="basic-addon1"
+                  aria-describedby="emailHelp"
+                  id="email"
+                  value={state.email}
+                  onChange={onInputChange}
                 />
               </InputGroup>
               {/* <input
@@ -128,6 +145,9 @@ function Register() {
                   placeholder="Password"
                   aria-label="Password"
                   aria-describedby="basic-addon1"
+                  id="password"
+                  value={state.password}
+                  onChange={onInputChange}
                 />
               </InputGroup>
               {/* <input
@@ -150,6 +170,9 @@ function Register() {
                   placeholder="Confirm Password"
                   aria-label="ConfirmPassword"
                   aria-describedby="basic-addon1"
+                  id="confirmpassword"
+                  value={state.confirmpassword}
+                  onChange={onInputChange}
                 />
               </InputGroup>
               {/* <input

@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 
 import Pug from './components/Pug';
 import AllBreeds from './components/AllBreeds';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+import Login from './components/auth/Login1';
+import Register from './components/auth/Register1';
 import Header from './components/Header';
 import Error from './components/Error';
 
