@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Pug from './components/Pug';
 import AllBreeds from './components/AllBreeds';
-import Login from './auth/Login';
-import Register from './auth/Register';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import Header from './components/Header';
 import Error from './components/Error';
 
