@@ -10,9 +10,8 @@ export default function Pug() {
     e.preventDefault()
     axios.get(`https://dog.ceo/api/breed/pug/images/random`)
       .then(res => {
-        console.log(res.data.message);
+
         setPug(res.data.message);
-        console.log("pug", pug)
       })
       .catch(error => {
         console.log(error)
