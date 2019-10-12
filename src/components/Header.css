@@ -3,3 +3,9 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.header-grandparent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

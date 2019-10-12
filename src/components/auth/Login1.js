@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import { thisExpression } from '@babel/types';
 
 class LogIn extends Component {
   state = {
@@ -38,11 +39,13 @@ class LogIn extends Component {
     try {
       const user = await Auth.signIn(this.state.username, this.state.password);
       console.log("user", user);
+      this.props.auth.setAuthStatus(true);
+      this.props.auth.setUser(user)
       this.props.history.push('/');
     } catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.state({
+      this.setState({
         errors: {
           ...this.state.errors,
           cognito: err
@@ -92,11 +95,6 @@ class LogIn extends Component {
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
                 </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <a href="/forgotpassword">Forgot password?</a>
               </p>
             </div>
             <div className="field">
