@@ -1,20 +1,22 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
 import Pug from './components/Pug';
 import AllBreeds from './components/AllBreeds';
 import Login from './components/auth/Login1';
 import Register from './components/auth/Register1';
 import Header from './components/Header';
 import Error from './components/Error';
+import { Auth } from 'aws-amplify';
 
 import store from './store'
+import { atRule } from 'postcss';
 
 class App extends Component {
 
   state = {
     isAuthenticated: false,
+    isAuthenticating: false,
     user: null
   }
 
@@ -26,6 +28,19 @@ class App extends Component {
     this.setState({ user: user })
   }
 
+  async componentDidMount() {
+    try {
+      const session = await atRule.currentSession();
+      this.setAuthStatus(true)
+      console.log(session)
+      const user = await Auth.currentAuthenticatedUser();
+      this.setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState({ isAuthenticating: true });
+  }
+
   render() {
     let authProps = {
       isAuthenticated: this.state.isAuthenticated,
@@ -34,7 +49,10 @@ class App extends Component {
       setUser: this.setUser
     }
 
+    console.log("isAuthenticating", this.state.isAuthenticating)
+
     return (
+      !this.state.isAuthenticating &&
       <Provider store={store} hello={console.log('store', store)}>
         <BrowserRouter>
           <div>
