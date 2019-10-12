@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import breedPlaceholder from './breedPlaceholder.jpg';
-import axios from 'axios';
 import Header from './Header'
 
 export default function AllBreeds() {
@@ -9,14 +8,15 @@ export default function AllBreeds() {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    axios.get(`https://dog.ceo/api/breed/${breed}/images/random`)
-      .then(res => {
+    // fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+    //   .then(res => res.json())
+    //   .then(data => {
 
-        setDog(res.data.message);
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    //     setDog(data.message);
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   }
 
   let handleChange = (e) => {

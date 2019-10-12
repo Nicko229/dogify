@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import placeholder from './placeholder.jpg';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchDogs } from '../actions/dogActions';
 import Header from './Header'
+import { photoPickerButton } from '@aws-amplify/ui';
 
-export default function Pug() {
-  const [pug, setPug] = useState('')
+function Pug(props) {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    axios.get(`https://dog.ceo/api/breed/pug/images/random`)
-      .then(res => {
-
-        setPug(res.data.message);
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    props.fetchDogs();
   }
 
   return (
     <div>
-      {/* <Header /> */}
       <h1>Pug Information Page</h1>
 
       <input onClick={handleSubmit} className="submit-input" type="submit" value="Submit" />
 
       <div className="image-div">
         <img className="dog-image" src={
-          pug === '' ? placeholder : pug
+          props.dogs === '' ? placeholder : props.dogs
         } />
       </div>
     </div>
   )
 };
+
+const mapStateToProps = state => ({
+  dogs: state.dogs.pugs
+});
+
+export default connect(mapStateToProps, { fetchDogs })(Pug)
