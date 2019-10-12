@@ -8,15 +8,15 @@ export default function AllBreeds() {
 
   let handleSubmit = (e) => {
     e.preventDefault()
-    fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
-      .then(res => res.json())
-      .then(data => {
+    // fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+    //   .then(res => res.json())
+    //   .then(data => {
 
-        setDog(data.message);
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    //     setDog(data.message);
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   }
 
   let handleChange = (e) => {

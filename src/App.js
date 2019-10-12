@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+
 import Pug from './components/Pug';
 import AllBreeds from './components/AllBreeds';
 import Login from './components/auth/Login';
@@ -9,7 +9,7 @@ import Register from './components/auth/Register';
 import Header from './components/Header';
 import Error from './components/Error';
 
-const store = createStore(() => [], {}, applyMiddleware());
+import store from './store'
 
 function App() {
   return (

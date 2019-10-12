@@ -1,0 +1,2 @@
+export const FETCH_ALL_BREEDS = 'FETCH_ALL_BREEDS';
+export const FETCH_PUGS = 'FETCH_PUGS'
