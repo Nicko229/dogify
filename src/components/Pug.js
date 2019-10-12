@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import placeholder from './placeholder.jpg';
-import axios from 'axios';
 import Header from './Header'
 
 export default function Pug() {

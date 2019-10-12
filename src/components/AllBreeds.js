@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import breedPlaceholder from './breedPlaceholder.jpg';
-import axios from 'axios';
 import Header from './Header'
 
 export default function AllBreeds() {
