@@ -16,7 +16,7 @@ class App extends Component {
 
   state = {
     isAuthenticated: false,
-    isAuthenticating: false,
+    isAuthenticating: true,
     user: null
   }
 
@@ -38,7 +38,7 @@ class App extends Component {
     } catch (error) {
       console.log(error);
     }
-    this.setState({ isAuthenticating: true });
+    this.setState({ isAuthenticating: false });
   }
 
   render() {
