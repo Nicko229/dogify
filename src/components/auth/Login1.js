@@ -3,6 +3,7 @@ import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 import { thisExpression } from '@babel/types';
+import { NavLink } from 'react-router-dom';
 import './Login1.css';
 
 class LogIn extends Component {
@@ -36,10 +37,8 @@ class LogIn extends Component {
       });
     }
 
-    // AWS Cognito integration here
     try {
       const user = await Auth.signIn(this.state.username, this.state.password);
-      console.log("user", user);
       this.props.auth.setAuthStatus(true);
       this.props.auth.setUser(user)
       this.props.history.push('/');
@@ -104,6 +103,15 @@ class LogIn extends Component {
                 <button className="button is-success">
                   Login
                 </button>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <NavLink to="/register">
+                  <button className="button is-success">
+                    Register
+                  </button>
+                </NavLink>
               </p>
             </div>
           </form>

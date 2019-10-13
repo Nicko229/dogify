@@ -1,0 +1,7 @@
+.user-parent {
+  margin-top: 5vh;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  text-align: center;
+}

@@ -33,6 +33,7 @@ export default class AllBreeds extends Component {
                   <h2 className="dogify">Dogify</h2>
                   <NavLink className="header-child" to="/all-breeds">Canine</NavLink>
                   <NavLink className="header-child" to={"/"}>Pugs</NavLink>
+                  <NavLink className="header-child" to={"/user"}>Account</NavLink>
                 </div>
                 <div className="header-parent-right">
                   <div className="logout-div">
