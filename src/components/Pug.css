@@ -1,32 +1,32 @@
-.canine-grandparent {
+.pug-grandparent {
   display: flex;
   justify-content: center;
 }
 
-.canine-parent {
+.pug-parent {
   width: 50vw;
   margin-top: 4vw;
 }
 
-.canine-header {
+.pug-header {
   margin-bottom: 3vh;
   text-align: center;
 }
-  
-.canine-text {
+
+.pug-text {
   text-align: justify;
 }
 
-.canine-image-div {
+.pug-image-div {
   text-align: center;
 }
 
-.submit-input, .text-input {
+.submit-input {
   margin-top: 1vh;
   margin-bottom: 3vh;
 }
 
-.canine-image {
+.pug-image {
   height: 15em;
   width: 15em;
 }

@@ -1,11 +1,37 @@
 .header-parent {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  background-color: #f2f2f2
 }
 
-.header-grandparent {
+.header-parent-left {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 }
+
+.header-parent-right {
+  width: 100%;
+  text-align: right !important;
+}
+
+.header-child {
+  margin-left: 1vw;
+  margin-right: 1vw;
+  margin-top: 2.8vh;
+  color: black;
+}
+
+.dogify {
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.logout-div {
+  margin-top: 2.8vh;
+}
+
+.logout {
+  margin-top: 5px;
+  margin-right: 1vw;
+}
+
