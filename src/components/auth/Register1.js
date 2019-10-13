@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import './Register1.css';
 
 class Register extends Component {
   state = {
@@ -74,10 +75,11 @@ class Register extends Component {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Register</h1>
+          <h1 className="dogify">Dogify</h1>
+          <h3>Register</h3>
           <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.handleSubmit}>
+          <form className="parent-form" onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control">
                 <input

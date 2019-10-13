@@ -3,6 +3,7 @@ import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 import { thisExpression } from '@babel/types';
+import './Login1.css';
 
 class LogIn extends Component {
   state = {
@@ -65,10 +66,11 @@ class LogIn extends Component {
     return (
       <section className="section auth">
         <div className="container">
-          <h1>Log in</h1>
+          <h1 className="dogify">Dogify</h1>
+          <h3 className="login">Log in</h3>
           <FormErrors formerrors={this.state.errors} />
 
-          <form onSubmit={this.handleSubmit}>
+          <form className="parent-form" onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control">
                 <input

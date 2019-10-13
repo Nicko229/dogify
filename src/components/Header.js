@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
+import { Navbar, Nav } from 'react-bootstrap';
 import './Header.css';
 
 
@@ -25,13 +26,21 @@ export default class AllBreeds extends Component {
 
           <div>
             {this.props.auth.isAuthenticated && this.props.auth.user && (
-              <div>
-                <div >
-                  <NavLink to="/all-breeds">All Breeds</NavLink>
-                  <NavLink to={!this.props.auth.isAuthenticated ? '/login' : "/"}>Pugs</NavLink>
-                  <NavLink onClick={this.handleLogout} to="/login"  >Logout</NavLink>
+              <div className="header-parent" >
+
+
+                <div className='header-parent-left'>
+                  <h2 className="dogify">Dogify</h2>
+                  <NavLink className="header-child" to="/all-breeds">Canine</NavLink>
+                  <NavLink className="header-child" to={"/"}>Pugs</NavLink>
                 </div>
-                <p>{this.props.auth.user.username}</p>
+                <div className="header-parent-right">
+                  <div className="logout-div">
+                    <NavLink className="logout"
+                      onClick={this.handleLogout}
+                      to="/login"  >Logout</NavLink>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -39,10 +48,12 @@ export default class AllBreeds extends Component {
       )
 
     } else {
-      return <p>Please login below</p>
+      return <p></p>
     }
 
 
-  }
 
-};
+
+  };
+
+}
