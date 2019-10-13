@@ -7,6 +7,7 @@ import Login from './components/auth/Login1';
 import Register from './components/auth/Register1';
 import Header from './components/Header';
 import Error from './components/Error';
+import User from './components/User';
 import { Auth } from 'aws-amplify';
 
 import store from './store'
@@ -53,7 +54,7 @@ class App extends Component {
 
     return (
       !this.state.isAuthenticating &&
-      <Provider store={store} hello={console.log('store', store)}>
+      <Provider store={store} >
         <BrowserRouter>
           <div>
             <Header auth={authProps} />
@@ -62,6 +63,7 @@ class App extends Component {
               <Route path="/all-breeds" render={(props) => <AllBreeds {...props} auth={authProps} />} />
               <Route path="/login" render={(props) => <Login {...props} auth={authProps} />} />
               <Route path="/register" render={(props) => <Register {...props} auth={authProps} />} />
+              <Route path="/user" render={(props) => <User {...props} auth={authProps} />} />
               < Route component={Error} />
             </Switch>
           </div>

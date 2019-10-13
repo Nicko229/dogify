@@ -50,7 +50,7 @@ class Register extends Component {
           email: email
         }
       });
-      console.log("sighUpResponse", signUpResponse);
+      console.log(signUpResponse);
       this.props.history.push('/login');
     } catch (error) {
       let err = null;

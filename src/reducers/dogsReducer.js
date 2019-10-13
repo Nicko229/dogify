@@ -19,7 +19,6 @@ export default function (state = initialState, action) {
         pugs: action.payload
       }
     case FETCH_ALL_BREEDS:
-      console.log("action.payload", action.payload)
       return {
         ...state,
         allBreeds: action.payload
@@ -29,7 +28,6 @@ export default function (state = initialState, action) {
         ...state,
         breed: action.payload
       }
-      console.log("reducer again")
     default:
       return state;
   }

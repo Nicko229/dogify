@@ -2,8 +2,6 @@ import React from 'react';
 import placeholder from './placeholder.jpg';
 import { connect } from 'react-redux';
 import { fetchPugs } from '../actions/dogActions';
-import Header from './Header'
-import { photoPickerButton } from '@aws-amplify/ui';
 import './Pug.css';
 
 function Pug(props) {

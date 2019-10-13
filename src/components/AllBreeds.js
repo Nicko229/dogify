@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { fetchAllBreeds, breedInput } from '../actions/dogActions';
 import breedPlaceholder from './breedPlaceholder.jpg';
-import Header from './Header'
-import { getPortPromise } from 'portfinder';
 import './AllBreeds.css';
 
 function AllBreeds(props) {
