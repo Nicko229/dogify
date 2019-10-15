@@ -30,23 +30,27 @@ class App extends Component {
 
   setAuthStatus = () => {
     // call redux action - authenticated
-    this.props.authenticated(this.props.isAuthenticated)
+    this.props.authenticated()
     // this.setState({ isAuthenticated: authenticated });
   }
 
   setUser = () => {
     // call redux action - user
-    this.props.user(this.props.user)
+    this.props.user()
   }
 
   async componentDidMount() {
-    console.log("Hello from ComponentDidMount")
+
     try {
       const session = await atRule.currentSession();
-      this.setAuthStatus(true)
+      console.log("Hello from Componentdid mount further")
+      // this.setAuthStatus() not being called correctly. Being returned as undefined
+      this.props.authenticated()
+
       console.log(session)
       const user = await Auth.currentAuthenticatedUser();
-      this.setUser(user);
+      console.log("hello from componentDidMount")
+      this.props.user(user);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +90,7 @@ class App extends Component {
 // mapstatetoprops
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.authenticated,
-  user: state.auth.user,
+  userAuth: state.auth.user,
   isAuthenticating: state.auth.authenticating
 });
 

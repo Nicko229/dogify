@@ -7,7 +7,7 @@ import {
 export let authenticated = () => {
   return {
     type: AUTHENTICATED,
-    payload: authenticated
+    payload: true
   }
 }
 

@@ -18,7 +18,7 @@ export default class AllBreeds extends Component {
   }
 
   render() {
-    console.log("this.auth", this.props.auth)
+    // console.log("this.auth", this.props.auth)
 
     if (this.props.auth.isAuthenticated) {
       return (
