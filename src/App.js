@@ -9,27 +9,38 @@ import Header from './components/Header';
 import Error from './components/Error';
 import User from './components/User';
 import { Auth } from 'aws-amplify';
+import { connect } from 'react-redux';
+import {
+  authenticated,
+  user,
+  authenticating
+} from './actions/authActions';
 
 import store from './store'
 import { atRule } from 'postcss';
 
 class App extends Component {
 
-  state = {
-    isAuthenticated: false,
-    isAuthenticating: true,
-    user: null
+  // // Change this to call redux action - userAuth
+  // state = {
+  //   isAuthenticated: false,
+  //   isAuthenticating: true,
+  //   user: null
+  // }
+
+  setAuthStatus = () => {
+    // call redux action - authenticated
+    this.props.authenticated(this.props.isAuthenticated)
+    // this.setState({ isAuthenticated: authenticated });
   }
 
-  setAuthStatus = authenticated => {
-    this.setState({ isAuthenticated: authenticated });
-  }
-
-  setUser = (user) => {
-    this.setState({ user: user })
+  setUser = () => {
+    // call redux action - user
+    this.props.user(this.props.user)
   }
 
   async componentDidMount() {
+    console.log("Hello from ComponentDidMount")
     try {
       const session = await atRule.currentSession();
       this.setAuthStatus(true)
@@ -39,10 +50,12 @@ class App extends Component {
     } catch (error) {
       console.log(error);
     }
-    this.setState({ isAuthenticating: false });
+    // call redux action
+    this.props.authenticating();
   }
 
   render() {
+    // use the state here!!!
     let authProps = {
       isAuthenticated: this.state.isAuthenticated,
       user: this.state.user,
@@ -71,7 +84,14 @@ class App extends Component {
       </Provider>
     );
   }
-
 }
 
-export default App;
+// mapstatetoprops
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.authenticated,
+  user: state.auth.user,
+  isAuthenticating: state.auth.authenticating
+});
+
+// connect function
+export default connect(mapStateToProps, { authenticated, user, authenticating })(App);
