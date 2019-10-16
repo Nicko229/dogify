@@ -40,24 +40,24 @@ class App extends Component {
     this.props.user(user)
   }
 
-  // async componentDidMount() {
+  async componentDidMount() {
 
 
-  //   try {
-  //     const session = await atRule.currentSession();
+    try {
+      const session = await atRule.currentSession();
 
-  //     this.setAuthStatus()
+      this.setAuthStatus()
 
-  //     console.log("sesstion", session)
-  //     const user = await Auth.currentAuthenticatedUser();
-  //     console.log("hello from componentDidMount")
-  //     this.setUser(user);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   // call redux action
-  //   this.props.authenticating();
-  // }
+      console.log("sesstion", session)
+      const user = await Auth.currentAuthenticatedUser();
+      console.log("hello from componentDidMount")
+      this.setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+    // call redux action
+    this.props.authenticating();
+  }
 
   // problem with mapStateToProps
 
@@ -72,7 +72,7 @@ class App extends Component {
     }
 
     return (
-      this.props.isAuthenticating &&
+      !this.props.isAuthenticating &&
 
       <BrowserRouter>
         <div>
