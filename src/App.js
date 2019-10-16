@@ -21,6 +21,7 @@ import { atRule } from 'postcss';
 
 class App extends Component {
 
+
   // // Change this to call redux action - userAuth
   // state = {
   //   isAuthenticated: false,
@@ -34,41 +35,44 @@ class App extends Component {
     // this.setState({ isAuthenticated: authenticated });
   }
 
-  setUser = () => {
+  setUser = (user) => {
     // call redux action - user
-    this.props.user()
+    this.props.user(user)
   }
 
-  async componentDidMount() {
+  // async componentDidMount() {
 
-    try {
-      const session = await atRule.currentSession();
-      console.log("Hello from Componentdid mount further")
-      // this.setAuthStatus() not being called correctly. Being returned as undefined
-      this.props.authenticated()
 
-      console.log(session)
-      const user = await Auth.currentAuthenticatedUser();
-      console.log("hello from componentDidMount")
-      this.props.user(user);
-    } catch (error) {
-      console.log(error);
-    }
-    // call redux action
-    this.props.authenticating();
-  }
+  //   try {
+  //     const session = await atRule.currentSession();
+
+  //     this.setAuthStatus()
+
+  //     console.log("sesstion", session)
+  //     const user = await Auth.currentAuthenticatedUser();
+  //     console.log("hello from componentDidMount")
+  //     this.setUser(user);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   // call redux action
+  //   this.props.authenticating();
+  // }
+
+  // problem with mapStateToProps
 
   render() {
+    console.log("this.props", this.props)
     // use the state here!!!
     let authProps = {
       isAuthenticated: this.props.isAuthenticated,
-      user: this.props.user,
+      user: this.props.userAuth,
       setAuthStatus: this.setAuthStatus,
       setUser: this.setUser
     }
 
     return (
-      !this.props.isAuthenticating &&
+      this.props.isAuthenticating &&
 
       <BrowserRouter>
         <div>
@@ -89,9 +93,9 @@ class App extends Component {
 
 // mapstatetoprops
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.authenticated,
-  userAuth: state.auth.user,
-  isAuthenticating: state.auth.authenticating
+  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticating: state.auth.isAuthenticating,
+  userAuth: state.auth.user
 });
 
 // connect function
