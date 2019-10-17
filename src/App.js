@@ -21,49 +21,31 @@ import { atRule } from 'postcss';
 
 class App extends Component {
 
-
-  // // Change this to call redux action - userAuth
-  // state = {
-  //   isAuthenticated: false,
-  //   isAuthenticating: true,
-  //   user: null
-  // }
-
   setAuthStatus = () => {
-    // call redux action - authenticated
     this.props.authenticated()
-    // this.setState({ isAuthenticated: authenticated });
   }
 
   setUser = (user) => {
-    // call redux action - user
     this.props.user(user)
   }
 
   async componentDidMount() {
 
-
     try {
       const session = await atRule.currentSession();
-
       this.setAuthStatus()
-
       console.log("sesstion", session)
       const user = await Auth.currentAuthenticatedUser();
-      console.log("hello from componentDidMount")
       this.setUser(user);
     } catch (error) {
       console.log(error);
     }
-    // call redux action
     this.props.authenticating();
   }
 
-  // problem with mapStateToProps
 
   render() {
-    console.log("this.props", this.props)
-    // use the state here!!!
+    console.log("this.propssss", this.props)
     let authProps = {
       isAuthenticated: this.props.isAuthenticated,
       user: this.props.userAuth,
@@ -91,12 +73,10 @@ class App extends Component {
   }
 }
 
-// mapstatetoprops
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   isAuthenticating: state.auth.isAuthenticating,
   userAuth: state.auth.user
 });
 
-// connect function
 export default connect(mapStateToProps, { authenticated, user, authenticating })(App);

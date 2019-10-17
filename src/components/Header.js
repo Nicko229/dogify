@@ -22,7 +22,7 @@ export default class AllBreeds extends Component {
 
     if (this.props.auth.isAuthenticated) {
       return (
-        <nav classname="header-grandparent">
+        <nav className="header-grandparent">
 
           <div>
             {this.props.auth.isAuthenticated && this.props.auth.user && (
