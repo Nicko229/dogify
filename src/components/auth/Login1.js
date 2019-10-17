@@ -7,15 +7,17 @@ import { NavLink } from 'react-router-dom';
 import {
   authenticated,
   user,
-  authenticating
+  authenticating,
+  usernameState,
+  passwordState
 } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import './Login1.css';
 
 class LogIn extends Component {
   state = {
-    username: "",
-    password: "",
+    // username: "",
+    // password: "",
     errors: {
       cognito: null,
       blankfield: false
@@ -47,7 +49,7 @@ class LogIn extends Component {
 
     try {
 
-      const userLoggedIn = await Auth.signIn(this.state.username, this.state.password);
+      const userLoggedIn = await Auth.signIn(this.props.username, this.props.password);
       this.props.auth.setAuthStatus(true);
       this.props.auth.setUser(userLoggedIn)
       this.props.history.push('/');
@@ -63,16 +65,25 @@ class LogIn extends Component {
     }
   };
 
-  onInputChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+  onInputChangeUsername = event => {
+    this.props.usernameState(event);
+    // this.setState({
+    //   [event.target.id]: event.target.value
+    // });
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  };
+
+  onInputChangePassword = event => {
+    this.props.passwordState(event);
+    // this.setState({
+    //   [event.target.id]: event.target.value
+    // });
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
 
   render() {
 
-    // console.log("this.props", this.props)
+    console.log("this.props", this.props)
     return (
       <section className="section auth">
         <div className="container">
@@ -89,8 +100,8 @@ class LogIn extends Component {
                   id="username"
                   aria-describedby="usernameHelp"
                   placeholder="Enter username or email"
-                  value={this.state.username}
-                  onChange={this.onInputChange}
+                  value={this.props.username}
+                  onChange={this.onInputChangeUsername}
                 />
               </p>
             </div>
@@ -101,8 +112,8 @@ class LogIn extends Component {
                   type="password"
                   id="password"
                   placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onInputChange}
+                  value={this.props.password}
+                  onChange={this.onInputChangePassword}
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
@@ -135,7 +146,9 @@ class LogIn extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.authenticated,
   userAuth: state.auth.user,
-  isAuthenticating: state.auth.authenticating
+  isAuthenticating: state.auth.authenticating,
+  username: state.auth.username,
+  password: state.auth.password
 });
 
-export default connect(mapStateToProps, { authenticated, user, authenticating })(LogIn);
+export default connect(mapStateToProps, { authenticated, user, authenticating, usernameState, passwordState })(LogIn);

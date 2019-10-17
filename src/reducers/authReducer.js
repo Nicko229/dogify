@@ -1,13 +1,17 @@
 import {
   AUTHENTICATED,
   USER,
-  AUTHENTICATING
+  AUTHENTICATING,
+  USERNAME,
+  PASSWORD
 } from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
   isAuthenticating: true,
-  user: null
+  user: null,
+  username: "",
+  password: ""
 }
 
 export default function (state = initialState, action) {
@@ -26,6 +30,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticating: action.payload
+      }
+    case USERNAME:
+      return {
+        ...state,
+        username: action.payload
+      }
+    case PASSWORD:
+      return {
+        ...state,
+        password: action.payload
       }
     default:
       return state;
