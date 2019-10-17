@@ -3,7 +3,8 @@ import {
   USER,
   AUTHENTICATING,
   USERNAME,
-  PASSWORD
+  PASSWORD,
+  ERRORS
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +41,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         password: action.payload
+      }
+    case ERRORS:
+      return {
+        ...state,
+        errors: action.payload
       }
     default:
       return state;

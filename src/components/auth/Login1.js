@@ -9,28 +9,23 @@ import {
   user,
   authenticating,
   usernameState,
-  passwordState
+  passwordState,
+  errorsState
 } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import './Login1.css';
 
 class LogIn extends Component {
   state = {
-    // username: "",
-    // password: "",
-    errors: {
-      cognito: null,
-      blankfield: false
-    }
   };
 
   clearErrorState = () => {
-    this.setState({
+    this.props.errorsState({
       errors: {
         cognito: null,
         blankfield: false
       }
-    });
+    })
   };
 
   handleSubmit = async event => {
@@ -38,11 +33,11 @@ class LogIn extends Component {
 
     // Form validation
     this.clearErrorState();
-    const error = Validate(event, this.state);
+    const error = Validate(event, this.props);
     if (error) {
-      this.setState({
-        errors: { ...this.state.errors, ...error }
-      });
+      this.props.errorsState({
+        errors: { ...this.props.errors, ...error }
+      })
     }
 
 
@@ -56,9 +51,9 @@ class LogIn extends Component {
     } catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.setState({
+      this.props.errorsState({
         errors: {
-          ...this.state.errors,
+          ...this.props.errors,
           cognito: err
         }
       })
@@ -67,29 +62,22 @@ class LogIn extends Component {
 
   onInputChangeUsername = event => {
     this.props.usernameState(event);
-    // this.setState({
-    //   [event.target.id]: event.target.value
-    // });
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
 
   onInputChangePassword = event => {
     this.props.passwordState(event);
-    // this.setState({
-    //   [event.target.id]: event.target.value
-    // });
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
 
   render() {
 
-    console.log("this.props", this.props)
     return (
       <section className="section auth">
         <div className="container">
           <h1 className="dogify">Dogify</h1>
           <h3 className="login">Log in</h3>
-          <FormErrors formerrors={this.state.errors} />
+          <FormErrors formerrors={this.props.errors} />
 
           <form className="parent-form" onSubmit={this.handleSubmit}>
             <div className="field">
@@ -148,7 +136,8 @@ const mapStateToProps = state => ({
   userAuth: state.auth.user,
   isAuthenticating: state.auth.authenticating,
   username: state.auth.username,
-  password: state.auth.password
+  password: state.auth.password,
+  errors: state.auth.errors
 });
 
-export default connect(mapStateToProps, { authenticated, user, authenticating, usernameState, passwordState })(LogIn);
+export default connect(mapStateToProps, { authenticated, user, authenticating, usernameState, passwordState, errorsState })(LogIn);

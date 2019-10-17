@@ -41,3 +41,13 @@ export let passwordState = (event) => {
     payload: event.target.value
   }
 }
+
+export let errorsState = (event) => {
+  return {
+    type: ERRORS,
+    payload: {
+      cognito: null,
+      blankfield: false
+    }
+  }
+}
