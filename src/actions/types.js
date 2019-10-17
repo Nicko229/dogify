@@ -4,3 +4,6 @@ export const CHOOSE_BREED = 'CHOOSE_BREED';
 export const AUTHENTICATED = 'AUTHENTICATED';
 export const USER = 'USER';
 export const AUTHENTICATING = 'AUTHENTICATING';
+export const USERNAME = 'USERNAME';
+export const PASSWORD = 'PASSWORD';
+export const ERRORS = 'ERRORS';

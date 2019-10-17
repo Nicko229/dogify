@@ -33,10 +33,10 @@ class App extends Component {
 
     try {
       const session = await atRule.currentSession();
-      this.setAuthStatus()
+      // this.setAuthStatus()
       console.log("sesstion", session)
       const user = await Auth.currentAuthenticatedUser();
-      this.setUser(user);
+      // this.setUser(user);
     } catch (error) {
       console.log(error);
     }

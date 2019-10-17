@@ -1,7 +1,10 @@
 import {
   AUTHENTICATED,
   USER,
-  AUTHENTICATING
+  AUTHENTICATING,
+  USERNAME,
+  PASSWORD,
+  ERRORS
 } from './types';
 
 export let authenticated = () => {
@@ -22,5 +25,29 @@ export let authenticating = () => {
   return {
     type: AUTHENTICATING,
     payload: false
+  }
+}
+
+export let usernameState = (event) => {
+  return {
+    type: USERNAME,
+    payload: event.target.value
+  }
+}
+
+export let passwordState = (event) => {
+  return {
+    type: PASSWORD,
+    payload: event.target.value
+  }
+}
+
+export let errorsState = (event) => {
+  return {
+    type: ERRORS,
+    payload: {
+      cognito: null,
+      blankfield: false
+    }
   }
 }
