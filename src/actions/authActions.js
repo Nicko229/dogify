@@ -22,6 +22,7 @@ export let user = (user) => {
 }
 
 export let authenticating = () => {
+  console.log("hello from load")
   return {
     type: AUTHENTICATING,
     payload: false
