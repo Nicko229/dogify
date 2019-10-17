@@ -8,6 +8,8 @@ import Register from './components/auth/Register1';
 import Header from './components/Header';
 import Error from './components/Error';
 import User from './components/User';
+import AuthorizationError from './components/AuthorizationError';
+
 import { Auth } from 'aws-amplify';
 import { connect } from 'react-redux';
 import {
@@ -65,6 +67,7 @@ class App extends Component {
             <Route path="/login" render={(props) => <Login {...props} auth={authProps} />} />
             <Route path="/register" render={(props) => <Register {...props} auth={authProps} />} />
             <Route path="/user" render={(props) => <User {...props} auth={authProps} />} />
+            <Route path="/authorization-error" render={(props) => <AuthorizationError {...props} auth={authProps} />} />
             < Route component={Error} />
           </Switch>
         </div>
