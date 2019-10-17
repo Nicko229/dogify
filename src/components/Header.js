@@ -18,11 +18,11 @@ export default class AllBreeds extends Component {
   }
 
   render() {
-    console.log("this.auth", this.props.auth)
+    // console.log("this.auth", this.props.auth)
 
     if (this.props.auth.isAuthenticated) {
       return (
-        <nav classname="header-grandparent">
+        <nav className="header-grandparent">
 
           <div>
             {this.props.auth.isAuthenticated && this.props.auth.user && (

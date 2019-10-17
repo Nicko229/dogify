@@ -4,6 +4,12 @@ import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 import { thisExpression } from '@babel/types';
 import { NavLink } from 'react-router-dom';
+import {
+  authenticated,
+  user,
+  authenticating
+} from '../../actions/authActions';
+import { connect } from 'react-redux';
 import './Login1.css';
 
 class LogIn extends Component {
@@ -37,10 +43,13 @@ class LogIn extends Component {
       });
     }
 
+
+
     try {
-      const user = await Auth.signIn(this.state.username, this.state.password);
+
+      const userLoggedIn = await Auth.signIn(this.state.username, this.state.password);
       this.props.auth.setAuthStatus(true);
-      this.props.auth.setUser(user)
+      this.props.auth.setUser(userLoggedIn)
       this.props.history.push('/');
     } catch (error) {
       let err = null;
@@ -62,6 +71,8 @@ class LogIn extends Component {
   };
 
   render() {
+
+    // console.log("this.props", this.props)
     return (
       <section className="section auth">
         <div className="container">
@@ -121,4 +132,10 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.authenticated,
+  userAuth: state.auth.user,
+  isAuthenticating: state.auth.authenticating
+});
+
+export default connect(mapStateToProps, { authenticated, user, authenticating })(LogIn);
