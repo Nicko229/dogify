@@ -15,12 +15,10 @@ import {
 import { connect } from 'react-redux';
 import './Login1.css';
 
-class LogIn extends Component {
-  state = {
-  };
+function LogIn(props) {
 
-  clearErrorState = () => {
-    this.props.errorsState({
+  let clearErrorState = () => {
+    props.errorsState({
       errors: {
         cognito: null,
         blankfield: false
@@ -28,15 +26,15 @@ class LogIn extends Component {
     })
   };
 
-  handleSubmit = async event => {
+  let handleSubmit = async event => {
     event.preventDefault();
 
     // Form validation
-    this.clearErrorState();
-    const error = Validate(event, this.props);
+    clearErrorState();
+    const error = Validate(event, props);
     if (error) {
-      this.props.errorsState({
-        errors: { ...this.props.errors, ...error }
+      props.errorsState({
+        errors: { ...props.errors, ...error }
       })
     }
 
@@ -44,91 +42,90 @@ class LogIn extends Component {
 
     try {
 
-      const userLoggedIn = await Auth.signIn(this.props.username, this.props.password);
-      this.props.auth.setAuthStatus(true);
-      this.props.auth.setUser(userLoggedIn)
-      this.props.history.push('/');
+      const userLoggedIn = await Auth.signIn(props.username, props.password);
+      props.auth.setAuthStatus(true);
+      props.auth.setUser(userLoggedIn)
+      props.history.push('/');
     } catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.props.errorsState({
+      props.errorsState({
         errors: {
-          ...this.props.errors,
+          ...props.errors,
           cognito: err
         }
       })
     }
   };
 
-  onInputChangeUsername = event => {
-    this.props.usernameState(event);
+  let onInputChangeUsername = event => {
+    props.usernameState(event);
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
 
-  onInputChangePassword = event => {
-    this.props.passwordState(event);
+  let onInputChangePassword = event => {
+    props.passwordState(event);
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
 
-  render() {
 
-    return (
-      <section className="section auth">
-        <div className="container">
-          <h1 className="dogify">Dogify</h1>
-          <h3 className="login">Log in</h3>
-          <FormErrors formerrors={this.props.errors} />
 
-          <form className="parent-form" onSubmit={this.handleSubmit}>
-            <div className="field">
-              <p className="control">
-                <input
-                  className="input"
-                  type="text"
-                  id="username"
-                  aria-describedby="usernameHelp"
-                  placeholder="Enter username or email"
-                  value={this.props.username}
-                  onChange={this.onInputChangeUsername}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.props.password}
-                  onChange={this.onInputChangePassword}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success">
-                  Login
+  return (
+    <section className="section auth">
+      <div className="container">
+        <h1 className="dogify">Dogify</h1>
+        <h3 className="login">Log in</h3>
+        <FormErrors formerrors={props.errors} />
+
+        <form className="parent-form" onSubmit={handleSubmit}>
+          <div className="field">
+            <p className="control">
+              <input
+                className="input"
+                type="text"
+                id="username"
+                aria-describedby="usernameHelp"
+                placeholder="Enter username or email"
+                value={props.username}
+                onChange={onInputChangeUsername}
+              />
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={props.password}
+                onChange={onInputChangePassword}
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <button className="button is-success">
+                Login
                 </button>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <NavLink to="/register">
-                  <button className="button is-success">
-                    Register
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <NavLink to="/register">
+                <button className="button is-success">
+                  Register
                   </button>
-                </NavLink>
-              </p>
-            </div>
-          </form>
-        </div>
-      </section>
-    );
-  }
+              </NavLink>
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
 }
 
 const mapStateToProps = state => ({
