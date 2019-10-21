@@ -49,6 +49,7 @@ export let registerErrorsState = (errors, error) => {
 }
 
 export let registerResetErrorsState = () => {
+  console.log("hello from registerResetErrorsState")
   return {
     type: REGISTERRESETERRORS,
     payload: {

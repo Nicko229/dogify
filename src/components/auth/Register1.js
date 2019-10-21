@@ -21,8 +21,6 @@ class Register extends Component {
     this.props.registerResetErrorsState()
   }
 
-  // handleSubmit clearing state to undefined in try
-
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -38,12 +36,8 @@ class Register extends Component {
     }
 
     // AWS Cognito integration here
-    // const { username, email, password } = this.state
-    const { username, email, password } = this.props;
-    console.log("username handleSubmit", username)
-    console.log("password handleSubmit", password)
-    console.log("email handleSubmit", email)
 
+    const { username, email, password } = this.props;
 
     try {
       const signUpResponse = await Auth.signUp({
@@ -89,11 +83,11 @@ class Register extends Component {
 
   onInputConfirmPasswordChange = (event) => {
     this.props.registerConfirmPasswordState(event)
-    console.log('this.props', this.props)
     document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
   render() {
+    console.log("this.props.errors", this.props.errors)
     return (
       <section className="section auth">
         <div className="container">
