@@ -2,29 +2,40 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import { connect } from 'react-redux';
+import {
+  registerUsernameState,
+  registerEmailState,
+  registerPasswordState,
+  registerConfirmPasswordState,
+  registerErrorsState,
+  registerResetErrorsState,
+  registerCognitoErrorsState
+} from '../../actions/authActions';
 import './Register1.css';
 
 class Register extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-    errors: {
-      cognito: null,
-      blankfield: false,
-      passwordmatch: false
-    }
-  }
+  // state = {
+  //   username: "",
+  //   email: "",
+  //   password: "",
+  //   confirmpassword: "",
+  //   errors: {
+  //     cognito: null,
+  //     blankfield: false,
+  //     passwordmatch: false
+  //   }
+  // }
 
   clearErrorState = () => {
-    this.setState({
-      errors: {
-        cognito: null,
-        blankfield: false,
-        passwordmatch: false
-      }
-    });
+    this.props.registerResetErrorsState()
+    // this.setState({
+    //   errors: {
+    //     cognito: null,
+    //     blankfield: false,
+    //     passwordmatch: false
+    //   }
+    // });
   }
 
   handleSubmit = async event => {
@@ -32,20 +43,22 @@ class Register extends Component {
 
     // Form validation
     this.clearErrorState();
-    const error = Validate(event, this.state);
+    const error = Validate(event, this.props);
     if (error) {
-      this.setState({
-        errors: { ...this.state.errors, ...error }
-      });
+      this.props.registerErrorsState(this.props.errors, error)
+      // this.setState({
+      //   errors: { ...this.state.errors, ...error }
+      // });
     }
 
     // AWS Cognito integration here
-    const { username, email, password } = this.state
+    // const { username, email, password } = this.state
+    const { registerUsername, email, registerPassword } = this.props
 
     try {
       const signUpResponse = await Auth.signUp({
-        username,
-        password,
+        username: registerUsername,
+        password: registerPassword,
         attributes: {
           email: email
         }
@@ -55,19 +68,36 @@ class Register extends Component {
     } catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          cognito: error
-        }
-      })
+      this.props.registerCognitoErrorsState(this.props.errors, error)
+      // this.setState({
+      //   errors: {
+      //     ...this.state.errors,
+      //     cognito: error
+      //   }
+      // })
     }
   };
 
-  onInputChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+  onInputUsernameChange = event => {
+    this.props.registerUsernameState(event)
+    // this.setState({
+    //   [event.target.id]: event.target.value
+    // });
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+  onInputEmailChange = event => {
+    this.props.registerEmailState(event)
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+  onInputPasswordChange = event => {
+    this.props.registerPasswordState(event)
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+  onInputConfirmPasswordChange = event => {
+    this.props.registerConfirmPasswordState(event)
     document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
@@ -77,7 +107,7 @@ class Register extends Component {
         <div className="container">
           <h1 className="dogify">Dogify</h1>
           <h3>Register</h3>
-          <FormErrors formerrors={this.state.errors} />
+          <FormErrors formerrors={this.props.errors} />
 
           <form className="parent-form" onSubmit={this.handleSubmit}>
             <div className="field">
@@ -88,8 +118,8 @@ class Register extends Component {
                   id="username"
                   aria-describedby="userNameHelp"
                   placeholder="Enter username"
-                  value={this.state.username}
-                  onChange={this.onInputChange}
+                  value={this.props.registerUsername}
+                  onChange={this.onInputUsernameChange}
                 />
               </p>
             </div>
@@ -101,8 +131,8 @@ class Register extends Component {
                   id="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
-                  value={this.state.email}
-                  onChange={this.onInputChange}
+                  value={this.props.email}
+                  onChange={this.onInputEmailChange}
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-envelope"></i>
@@ -116,8 +146,8 @@ class Register extends Component {
                   type="password"
                   id="password"
                   placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onInputChange}
+                  value={this.props.registerPassword}
+                  onChange={this.onInputPasswordChange}
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
@@ -131,8 +161,8 @@ class Register extends Component {
                   type="password"
                   id="confirmpassword"
                   placeholder="Confirm password"
-                  value={this.state.confirmpassword}
-                  onChange={this.onInputChange}
+                  value={this.props.registerConfirmPassword}
+                  onChange={this.onInputConfirmPasswordChange}
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock"></i>
@@ -153,4 +183,21 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  username: state.auth.registerUsername,
+  email: state.auth.registerEmail,
+  password: state.auth.registerPassword,
+  confirmPassword: state.auth.registerConfirmPassword,
+  errors: state.auth.errors
+
+}, console.log("state.auth", state.auth));
+
+export default connect(mapStateToProps, {
+  registerUsernameState,
+  registerEmailState,
+  registerPasswordState,
+  registerConfirmPasswordState,
+  registerErrorsState,
+  registerResetErrorsState,
+  registerCognitoErrorsState
+})(Register);

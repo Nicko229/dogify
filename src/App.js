@@ -30,7 +30,6 @@ function App(props) {
   }
 
   useEffect(() => {
-    console.log("props", props)
     async function pageLoad() {
       try {
         const session = await atRule.currentSession();
