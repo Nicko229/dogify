@@ -48,7 +48,7 @@ export let registerErrorsState = (errors, error) => {
   }
 }
 
-export let registerResetErrorsState = (event) => {
+export let registerResetErrorsState = () => {
   return {
     type: REGISTERRESETERRORS,
     payload: {

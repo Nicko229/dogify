@@ -9,11 +9,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  registerUsername: "",
-  registerEmail: "",
-  registerPassword: "",
-  registerConfirmpassword: "",
-  registerErrors: {
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  errors: {
     cognito: null,
     blankfield: false,
     passwordmatch: false
@@ -25,27 +25,27 @@ export default function (state = initialState, action) {
     case REGISTERUSERNAME:
       return {
         ...state,
-        registerUsername: action.payload
+        username: action.payload
       }
     case REGISTEREMAIL:
       return {
         ...state,
-        registerEmail: action.payload
+        email: action.payload
       }
     case REGISTERPASSWORD:
       return {
         ...state,
-        registerPassword: action.payload
+        password: action.payload
       }
     case REGISTERCONFIRMPASSWORD:
       return {
         ...state,
-        registerConfirmPassword: action.payload
+        confirmPassword: action.payload
       }
     case REGISTERERRORS:
       return {
         ...state,
-        registerErrors: action.payload
+        errors: action.payload
       }
     case REGISTERRESETERRORS:
       return {
