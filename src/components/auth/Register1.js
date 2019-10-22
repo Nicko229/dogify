@@ -39,37 +39,27 @@ class Register extends Component {
     // PROBLEM: Try is resetting props to undefined
     // Can use a promise or not use try catch in async function
 
-    // try {
-    const signUpResponse = await Auth.signUp({
-      username,
-      password,
-      attributes: {
-        email: email
-      }
-    });
-    console.log("this.props handleSubmit", this.props)
-
-    console.log(signUpResponse);
-    this.props.history.push('/login');
-    // }
-    if (error) {
+    try {
+      const signUpResponse = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email: email
+        }
+      });
+      console.log(signUpResponse);
+    }
+    catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
       this.props.registerCognitoErrorsState(this.props.errors, error)
-      // this.setState({
-      //   errors: {
-      //     ...this.state.errors,
-      //     cognito: error
-      //   }
-      // })
     }
+    console.log("this.props handleSubmit", this.props)
+    this.props.history.push('/login');
   };
 
   onInputUsernameChange = (event) => {
     this.props.registerUsernameState(event)
-    // this.setState({
-    //   [event.target.id]: event.target.value
-    // });
     document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
@@ -89,7 +79,6 @@ class Register extends Component {
   }
 
   render() {
-    // console.log("this.props.errors", this.props.errors)
     return (
       <section className="section auth">
         <div className="container">
