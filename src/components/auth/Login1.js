@@ -28,8 +28,6 @@ function LogIn(props) {
 
   let handleSubmit = async event => {
     event.preventDefault();
-
-    // Form validation
     clearErrorState();
     const error = Validate(event, props);
     if (error) {
@@ -37,8 +35,6 @@ function LogIn(props) {
         errors: { ...props.errors, ...error }
       })
     }
-
-
 
     try {
 
@@ -67,8 +63,6 @@ function LogIn(props) {
     props.passwordState(event);
     document.getElementById(event.target.id).classList.remove("is-danger");
   };
-
-
 
   return (
     <section className="section auth">

@@ -4,7 +4,14 @@ import {
   AUTHENTICATING,
   USERNAME,
   PASSWORD,
-  ERRORS
+  ERRORS,
+  // REGISTERUSERNAME,
+  // REGISTEREMAIL,
+  // REGISTERPASSWORD,
+  // REGISTERCONFIRMPASSWORD,
+  // REGISTERERRORS,
+  // REGISTERRESETERRORS,
+  // REGISTERCOGNITOERRORS
 } from './types';
 
 export let authenticated = () => {
@@ -22,7 +29,6 @@ export let user = (user) => {
 }
 
 export let authenticating = () => {
-  console.log("hello from load")
   return {
     type: AUTHENTICATING,
     payload: false
@@ -48,7 +54,73 @@ export let errorsState = (event) => {
     type: ERRORS,
     payload: {
       cognito: null,
-      blankfield: false
+      blankfield: false,
+      passwordmatch: false
     }
   }
 }
+
+// export let registerUsernameState = (event) => {
+//   return {
+//     type: REGISTERUSERNAME,
+//     payload: event.target.value
+//   }
+// }
+
+// export let registerEmailState = (event) => {
+//   return {
+//     type: REGISTEREMAIL,
+//     payload: event.target.value
+//   }
+// }
+
+// export let registerPasswordState = (event) => {
+//   return {
+//     type: REGISTERPASSWORD,
+//     payload: event.target.value
+//   }
+// }
+
+// export let registerConfirmPasswordState = (event) => {
+//   return {
+//     type: REGISTERCONFIRMPASSWORD,
+//     payload: event.target.value
+//   }
+// }
+
+// export let registerErrorsState = (errors, error) => {
+//   return {
+//     type: REGISTERERRORS,
+//     payload: {
+//       errors: {
+//         ...errors,
+//         ...error
+//       }
+//     }
+//   }
+// }
+
+// export let registerResetErrorsState = (event) => {
+//   return {
+//     type: REGISTERRESETERRORS,
+//     payload: {
+//       errors: {
+//         cognito: null,
+//         blankfield: false,
+//         passwordmatch: false
+//       }
+//     }
+//   }
+// }
+
+// export let registerCognitoErrorsState = (errors, error) => {
+//   return {
+//     type: REGISTERCOGNITOERRORS,
+//     payload: {
+//       errors: {
+//         ...errors,
+//         cognito: error
+//       }
+//     }
+//   }
+// }

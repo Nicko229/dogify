@@ -2,45 +2,43 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import { connect } from 'react-redux';
+import {
+  registerUsernameState,
+  registerEmailState,
+  registerPasswordState,
+  registerConfirmPasswordState,
+  registerErrorsState,
+  registerResetErrorsState,
+  registerCognitoErrorsState
+} from '../../actions/registerAuthActions';
 import './Register1.css';
 
-class Register extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-    errors: {
-      cognito: null,
-      blankfield: false,
-      passwordmatch: false
-    }
+
+function Register(props) {
+
+  let clearErrorState = () => {
+    props.registerResetErrorsState()
   }
 
-  clearErrorState = () => {
-    this.setState({
-      errors: {
-        cognito: null,
-        blankfield: false,
-        passwordmatch: false
-      }
-    });
-  }
-
-  handleSubmit = async event => {
+  let handleSubmit = async event => {
     event.preventDefault();
 
     // Form validation
-    this.clearErrorState();
-    const error = Validate(event, this.state);
+    clearErrorState();
+    const error = Validate(event, props);
+
     if (error) {
-      this.setState({
-        errors: { ...this.state.errors, ...error }
-      });
+      props.registerErrorsState(props.errors, error)
     }
 
     // AWS Cognito integration here
-    const { username, email, password } = this.state
+
+    const { username, email, password } = props;
+
+    // PROBLEM: Try is resetting props to undefined
+    // Can use a promise or not use try catch in async function
+    // email is set to undefined somehow by Auth.signUp
 
     try {
       const signUpResponse = await Auth.signUp({
@@ -51,106 +49,131 @@ class Register extends Component {
         }
       });
       console.log(signUpResponse);
-      this.props.history.push('/login');
-    } catch (error) {
+    }
+    catch (error) {
       let err = null;
       !error.message ? err = { "Message": error } : err = error;
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          cognito: error
-        }
-      })
+      props.registerCognitoErrorsState(props.errors, error)
     }
+    console.log("this.props handleSubmit", props)
+    props.history.push('/login');
   };
 
-  onInputChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+  let onInputUsernameChange = (event) => {
+    props.registerUsernameState(event)
     document.getElementById(event.target.id).classList.remove("is-danger");
   }
 
-  render() {
-    return (
-      <section className="section auth">
-        <div className="container">
-          <h1 className="dogify">Dogify</h1>
-          <h3>Register</h3>
-          <FormErrors formerrors={this.state.errors} />
-
-          <form className="parent-form" onSubmit={this.handleSubmit}>
-            <div className="field">
-              <p className="control">
-                <input
-                  className="input"
-                  type="text"
-                  id="username"
-                  aria-describedby="userNameHelp"
-                  placeholder="Enter username"
-                  value={this.state.username}
-                  onChange={this.onInputChange}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input
-                  className="input"
-                  type="email"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                  value={this.state.email}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  type="password"
-                  id="confirmpassword"
-                  placeholder="Confirm password"
-                  value={this.state.confirmpassword}
-                  onChange={this.onInputChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-success">
-                  Register
-                </button>
-              </p>
-            </div>
-          </form>
-        </div>
-      </section>
-    );
+  let onInputEmailChange = (event) => {
+    props.registerEmailState(event)
+    document.getElementById(event.target.id).classList.remove("is-danger");
   }
+
+  let onInputPasswordChange = (event) => {
+    props.registerPasswordState(event)
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+  let onInputConfirmPasswordChange = (event) => {
+    props.registerConfirmPasswordState(event)
+    document.getElementById(event.target.id).classList.remove("is-danger");
+  }
+
+
+  return (
+    <section className="section auth">
+      <div className="container">
+        <h1 className="dogify">Dogify</h1>
+        <h3>Register</h3>
+        <FormErrors formerrors={props.errors} />
+
+        <form className="parent-form" onSubmit={handleSubmit}>
+          <div className="field">
+            <p className="control">
+              <input
+                className="input"
+                type="text"
+                id="username"
+                aria-describedby="userNameHelp"
+                placeholder="Enter username"
+                value={props.username}
+                onChange={onInputUsernameChange}
+              />
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left has-icons-right">
+              <input
+                className="input"
+                type="email"
+                id="email"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                value={props.email}
+                onChange={onInputEmailChange}
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-envelope"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={props.password}
+                onChange={onInputPasswordChange}
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                type="password"
+                id="confirmpassword"
+                placeholder="Confirm password"
+                value={props.confirmPassword}
+                onChange={onInputConfirmPasswordChange}
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <p className="control">
+              <button className="button is-success">
+                Register
+                </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  username: state.registerAuth.username,
+  email: state.registerAuth.email,
+  password: state.registerAuth.password,
+  confirmPassword: state.registerAuth.confirmPassword,
+  errors: state.registerAuth.errors
+});
+
+export default connect(mapStateToProps, {
+  registerUsernameState,
+  registerEmailState,
+  registerPasswordState,
+  registerConfirmPasswordState,
+  registerErrorsState,
+  registerResetErrorsState,
+  registerCognitoErrorsState
+})(Register);
