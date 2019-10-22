@@ -49,7 +49,6 @@ export let registerErrorsState = (errors, error) => {
 }
 
 export let registerResetErrorsState = () => {
-  console.log("hello from registerResetErrorsState")
   return {
     type: REGISTERRESETERRORS,
     payload: {
@@ -63,6 +62,8 @@ export let registerResetErrorsState = () => {
 }
 
 export let registerCognitoErrorsState = (errors, error) => {
+  // console.log("errors action", errors)
+  // console.log("error action", error)
   return {
     type: REGISTERCOGNITOERRORS,
     payload: {
