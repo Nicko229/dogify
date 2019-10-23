@@ -37,8 +37,8 @@ function Register(props) {
     const { username, email, password } = props;
 
     // PROBLEM: Try is resetting props to undefined
-    // Can use a promise or not use try catch in async function
     // email is set to undefined somehow by Auth.signUp
+    // try using the other cognito account
 
     try {
       const signUpResponse = await Auth.signUp({

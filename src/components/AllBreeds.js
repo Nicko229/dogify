@@ -17,8 +17,6 @@ function AllBreeds(props) {
     props.breedInput(e)
   }
 
-  console.log("props.auth.user.username AllBreeds", props.auth.user.username)
-
   if (props.auth.user.username === "User1") {
     return (
       <div className="canine-grandparent">

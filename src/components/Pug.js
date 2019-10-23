@@ -27,7 +27,7 @@ function Pug(props) {
           <input onClick={handleSubmit} className="submit-input" type="submit" value="Submit" />
 
           <div className="image-div">
-            <img className="pug-image" className="dog-image" src={
+            <img className="dog-image" src={
               props.dogs === '' ? placeholder : props.dogs
             } />
           </div>
