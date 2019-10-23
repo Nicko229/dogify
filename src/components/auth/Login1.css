@@ -1,6 +1,4 @@
-
-
-.parent-form {
+.login-parent-form {
   display: flex;
   align-self: center;
   flex-direction: column;
@@ -8,16 +6,14 @@
   text-align: center;
 }
 
-.container {
+.login-container {
   text-align: center;
   width: 25vw;
-  border: 1px solid grey;
   box-shadow: 5px 5px 5px 5px grey;
-  margin-top: 10vw;
   background-color: #f2f2f2
 }
 
-.field {
+.login-field {
   margin-bottom: 1vh;
 }
 
@@ -29,4 +25,12 @@
 .dogify {
   margin-top: 2vh;
   margin-bottom: 2vh;
+}
+
+.login-button {
+  width: 7em;
+}
+
+.login-input {
+  width: 18em;
 }

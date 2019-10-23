@@ -47,6 +47,6 @@ export default function AllBreeds(props) {
     )
 
   } else {
-    return <p></p>
+    return null
   }
 }
