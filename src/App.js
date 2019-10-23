@@ -56,7 +56,7 @@ function App(props) {
     !props.isAuthenticating &&
 
     <BrowserRouter>
-      <div>
+      <div >
         <Header auth={authProps} />
         <Switch>
           <Route path="/" render={(props) => <Pug {...props} auth={() => authProps} />} exact />

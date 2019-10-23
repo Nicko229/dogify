@@ -65,17 +65,17 @@ function LogIn(props) {
   };
 
   return (
-    <section>
-      <div className="login-container">
+    <section className="section auth">
+      <div className="container">
         <h1 className="dogify">Dogify</h1>
         <h3 className="login">Log in</h3>
         <FormErrors formerrors={props.errors} />
 
-        <form className="login-parent-form" onSubmit={handleSubmit}>
-          <div className="login-field">
-            <p>
+        <form className="parent-form" onSubmit={handleSubmit}>
+          <div className="field">
+            <p className="control">
               <input
-                className="login-input"
+                className="input"
                 type="text"
                 id="username"
                 aria-describedby="usernameHelp"
@@ -85,32 +85,32 @@ function LogIn(props) {
               />
             </p>
           </div>
-          <div className="login-field">
-            <p>
+          <div className="field">
+            <p className="control has-icons-left">
               <input
-                className="login-input"
+                className="input"
                 type="password"
                 id="password"
                 placeholder="Password"
                 value={props.password}
                 onChange={onInputChangePassword}
               />
-              <span>
+              <span className="icon is-small is-left">
                 <i className="fas fa-lock"></i>
               </span>
             </p>
           </div>
-          <div className="login-field">
-            <p>
-              <button className="login-button">
+          <div className="field">
+            <p className="control">
+              <button className="button is-success">
                 Login
                 </button>
             </p>
           </div>
-          <div className="login-field">
-            <p>
+          <div className="field">
+            <p className="control">
               <NavLink to="/register">
-                <button className="login-button">
+                <button className="button is-success">
                   Register
                   </button>
               </NavLink>
